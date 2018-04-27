@@ -1,8 +1,11 @@
 #include "config.h"
+#include <iostream>
+#include <vector>
 
 #ifndef __WORD_2_VEC__
 #define __WORD_2_VEC__
 
+    using namespace std;
     int afficherVec(const char* word, float *vec){
     
     
@@ -117,7 +120,7 @@
     }
 
     //ici on calcule la similarité cosinus de deux vecteur de taille vector_length
-    float cosine_similarity(float *A, float *B, long long Vector_Length)
+    float cosine_similarity(std::vector<float> A, std::vector<float> B, long long Vector_Length)
     {
         float dot = 0.0, denom_a = 0.0, denom_b = 0.0 ;
         for(long long i = 0; i < Vector_Length; ++i) {

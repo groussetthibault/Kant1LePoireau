@@ -39,7 +39,7 @@ int confirmation(int index, int indexpred){
     return -1;
 }
 
-int trouverReponse(float* vecquestion, float** vecfichier, long long size){
+int trouverReponse(std::vector<float> vecquestion, std::vector<std::vector<float>> vecfichier, long long size){
   int index = -1;
   int indexpred = -1;
   float maxpred = 0;

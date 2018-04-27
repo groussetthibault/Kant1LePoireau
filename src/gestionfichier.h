@@ -23,6 +23,7 @@ int nbligne(){
 
 //fonction pour separer les mot d'une phrase
 std::vector<std::string> split(const std::string &text, char sep) {
+    
     std::vector<std::string> tokens;
     std::size_t start = 0, end = 0;
     while ((end = text.find(sep, start)) != std::string::npos) {
@@ -45,7 +46,6 @@ int supprimerStopWord(std::string monString, char** monTableau){
     std::string ligne;
 
     for (int i = 0 ; i < results.size() ; ++i) isWS[i] = false; //tableau bool a false
-
     if (fichier){
         while(getline(fichier, ligne)){  //pour chaque ligne
             for (int i = 0 ; i < results.size() ; ++i){ //je regarde dans mon vecteur de mots
@@ -55,7 +55,6 @@ int supprimerStopWord(std::string monString, char** monTableau){
         }
     }
     fichier.close();
-
     for (int i = 0 ; i < results.size() ; ++i){ // pour chaque mot dans mon vecteur
         if(!isWS[i]){                           // si le mot n'est pas un stop word
             strcpy(monTableau[mot], results[i].c_str()); // je le met dans mon tableau
