@@ -20,7 +20,7 @@
     const char separateur = '|';
 
     //similarité cosinus minimum pour donner une reponse sure / voir decision
-    float compris = 0.6;
-    float confirmer = 0.2;
+    float compris = 0.8;
+    float confirmer = 0.6;
 
 #endif

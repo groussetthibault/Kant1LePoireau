@@ -4,7 +4,7 @@
 #include <vector>
 #include <sstream>
 
-int confirmation(int index, int indexpred){
+int confirmation(int index, int indexpred, float maxpred){
     std::vector<std::string> pLigne;
     std::vector<std::string> questions;
     std::ifstream fichier(file_name_rep, std::ios::in);  // on ouvre le fichier en lecture
@@ -27,19 +27,21 @@ int confirmation(int index, int indexpred){
     }
     fichier.close();
     cout << "je ne suis pas sur d'avoir compris, la question porte sur : " << questions[index-1] << " ? (oui/non)" << endl;
-    cin >> ligne;
+    getline(cin, ligne);
     if(ligne == "oui"){
         return index;
     }
-    cout << "ah... et est-ce que la question porte sur : " << questions[indexpred-1] << " ? (oui/non)" << endl;
-    cin >> ligne;
-    if(ligne == "oui"){
-        return indexpred;
+    if(maxpred >= confirmer){
+        cout << "ah... et est-ce que la question porte sur : " << questions[indexpred-1] << " ? (oui/non)" << endl;
+        getline(cin, ligne);
+        if(ligne == "oui"){
+            return indexpred;
+        }
     }
     return -1;
 }
 
-int trouverReponse(std::vector<float> vecquestion, std::vector<std::vector<float>> vecfichier, long long size){
+int trouverReponse(std::vector<float> vecquestion, std::vector<std::vector<float> > vecfichier, long long size){
   int index = -1;
   int indexpred = -1;
   float maxpred = 0;
@@ -60,7 +62,7 @@ int trouverReponse(std::vector<float> vecquestion, std::vector<std::vector<float
     return index;
   }
   else if (max >= confirmer){
-      return confirmation(index, indexpred);
+      return confirmation(index, indexpred, maxpred);
   }
   else{
       return -1;

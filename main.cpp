@@ -9,12 +9,12 @@
 using namespace std;
 
 
-std::vector<std::string> chargerFichierReponse(std::vector<std::vector<float>>& vecfichier, long long size){
+std::vector<std::string> chargerFichierReponse(std::vector<std::vector<float> >& vecfichier, long long size){
   std::vector<std::string> pLigne;
   std::vector<std::string> reponse;
   int affichageTotalLigne = nbligne();
   char **monTableau = new char* [100];
-  float vec[max_size];
+  float *vec = new float[max_size];
   std::ifstream fichier(file_name_rep, std::ios::in);  // on ouvre le fichier en lecture
 
   for(int i = 0; i < 100; i++) monTableau[i] = new char[100];
@@ -55,6 +55,12 @@ std::vector<std::string> chargerFichierReponse(std::vector<std::vector<float>>& 
   }
   fichier.close();
 
+  for(int i = 0; i < 100; i++) {
+    delete[] monTableau[i];
+  }
+  delete[] monTableau;
+  delete[] vec;
+
   return reponse;
 }
 
@@ -62,7 +68,7 @@ std::vector<std::string> chargerFichierReponse(std::vector<std::vector<float>>& 
 void chargerQuestion(std::string question, std::vector<float>& vecquestion, long long size){
 
   char **monTableau = new char* [100];
-  float vec[max_size];
+  float *vec = new float[max_size];
 
   for(int i = 0; i < 100; i++) monTableau[i] = new char[100];
   for (long long a = 0; a < size; a++) vecquestion[a] = 0;
@@ -81,6 +87,12 @@ void chargerQuestion(std::string question, std::vector<float>& vecquestion, long
     ++z;
   }
   
+  for(int i = 0; i < 100; i++) {
+    delete[] monTableau[i];
+  }
+  delete[] monTableau;
+  delete[] vec;
+  
 }
 
 
@@ -88,7 +100,7 @@ void chargerQuestion(std::string question, std::vector<float>& vecquestion, long
 
 
 
-int main(int argc, char **argv) {
+int main() {
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////declaration des variables///////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -96,7 +108,7 @@ int main(int argc, char **argv) {
     FILE *f;
     int indexRep;
     std::vector<float> vecquestion;
-    std::vector<std::vector<float>> vecfichier;
+    std::vector<std::vector<float> > vecfichier;
     long long size, words;
     std::string question;
     std::vector<std::string> reponse;
@@ -131,9 +143,9 @@ int main(int argc, char **argv) {
     //////////////////////gestion des erreurs d'entrés//////////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
-    if (argc != 1) {
+    /*if (argc != 1) {
         return 0; //errcode no .bin enter 
-    }
+    }*/
 
 
 
@@ -147,13 +159,18 @@ int main(int argc, char **argv) {
     while(42){
       cout << "posez donc votre question :" << endl << "> ";
       getline(cin, question);
+
       chargerQuestion(question, vecquestion, size); // on charge la question qu'on a posé
       indexRep = trouverReponse(vecquestion, vecfichier, size);
-      cout << "la meilleure réponse est la reponse : " << indexRep-1 << endl;
-      if(indexRep >= 1)
+
+      if(indexRep >= 1){
+        cout << "la meilleure réponse est la reponse : " << indexRep-1 << endl;
         cout << reponse[indexRep-1] << endl;
-      else
+      }
+      else{
+        cout << "la meilleure réponse est la reponse : D" << endl;
         cout << "je n'ai pas compris la question" << endl;
+      }
     }
 
     return 0;

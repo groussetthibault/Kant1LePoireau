@@ -19,8 +19,8 @@
         FILE *f;
         char st1[max_size];
         char st[100][max_size];
-        float dist, len;
-        long long words, size, a, b, c, d, cn, bi[100];
+        float len;
+        long long words, size, a, b, c, cn, bi[100];
         float *M;
         char *vocab;
         f = fopen(file_name, "rb");
@@ -29,8 +29,8 @@
         }
         fscanf(f, "%lld", &words);
         fscanf(f, "%lld", &size);
-        vocab = (char *)malloc((long long)words * max_w * sizeof(char));
-        M = (float *)malloc((long long)words * (long long)size * sizeof(float));
+        vocab = new char[(long long)words * max_w * sizeof(char)];
+        M = new float[(long long)words * (long long)size * sizeof(float)];
         if (M == NULL) {
         return -1; //M too long can't allocate memory needed
         }
@@ -115,7 +115,8 @@
         /*for (b = 0; b < size; b++) printf(" %f |", vec[b]);
         printf("\n");*/
 
-    
+        delete[] vocab;
+        delete[] M;
         return 1;
     }
 

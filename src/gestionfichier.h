@@ -41,27 +41,29 @@ int supprimerStopWord(std::string monString, char** monTableau){
    
     int mot = 0;
     vector<std::string> results = split(monString, ' ');
-    bool isWS[results.size()];
+    bool *isWS = new bool[results.size()];
     std::ifstream fichier(file_stopWord, std::ios::in);
     std::string ligne;
 
-    for (int i = 0 ; i < results.size() ; ++i) isWS[i] = false; //tableau bool a false
+    for (unsigned int i = 0 ; i < results.size() ; ++i) isWS[i] = false; //tableau bool a false
     if (fichier){
         while(getline(fichier, ligne)){  //pour chaque ligne
-            for (int i = 0 ; i < results.size() ; ++i){ //je regarde dans mon vecteur de mots
+            for (unsigned int i = 0 ; i < results.size() ; ++i){ //je regarde dans mon vecteur de mots
                 if(ligne == results[i]) // si le mot est dans les stopwords
                     isWS[i] = true; // si oui je met le bool correspondant a true
             }
         }
     }
     fichier.close();
-    for (int i = 0 ; i < results.size() ; ++i){ // pour chaque mot dans mon vecteur
+    for (unsigned int i = 0 ; i < results.size() ; ++i){ // pour chaque mot dans mon vecteur
         if(!isWS[i]){                           // si le mot n'est pas un stop word
             strcpy(monTableau[mot], results[i].c_str()); // je le met dans mon tableau
             mot++;                                      // j'augmente le nombre de mot
             //cout << mot << " " << results[i] << endl;
         }
     }
+
+    delete[] isWS;
 
     return mot;
 }
